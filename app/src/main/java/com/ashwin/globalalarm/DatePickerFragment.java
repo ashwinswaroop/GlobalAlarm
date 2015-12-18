@@ -21,6 +21,7 @@ public class DatePickerFragment extends DialogFragment
     }
     @Override
     public void onDateSet(DatePicker view, int year, int month, int day) {
+        MainActivity.date = year + " " + month + " " + day;
         DialogFragment newFragment = new TimePickerFragment();
         newFragment.show(getFragmentManager(), "timePicker");
     }

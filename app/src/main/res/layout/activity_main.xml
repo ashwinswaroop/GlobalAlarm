@@ -15,14 +15,27 @@
 
     </android.support.design.widget.AppBarLayout>
 
+
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:id="@+id/alarmList2"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+        <!--
         <include layout="@layout/content_main" />
+        <- -->
 
     </android.support.v4.widget.NestedScrollView>
+
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/alarmList"
+        android:layout_centerHorizontal="true"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="8dp" />
 
     <android.support.design.widget.FloatingActionButton android:id="@+id/fab"
         android:layout_width="wrap_content" android:layout_height="wrap_content"

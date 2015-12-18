@@ -2,6 +2,7 @@ package com.ashwin.globalalarm;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.app.FragmentManager;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.text.format.DateFormat;
@@ -22,5 +23,9 @@ public class TimePickerFragment extends DialogFragment
     }
 
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        MainActivity.time = hourOfDay + " " + minute;
+        FragmentManager fm = getFragmentManager();
+        AlarmDialogFragment editNameDialog = new AlarmDialogFragment();
+        editNameDialog.show(fm, "fragment_edit_name");
     }
 }
