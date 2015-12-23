@@ -3,6 +3,8 @@ package com.ashwin.globalalarm;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.graphics.Typeface;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,16 +22,23 @@ public class AlarmCursorAdapter extends CursorAdapter {
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
+        Typeface type = Typeface.createFromAsset(context.getAssets(),"1.ttf");
         TextView Name = (TextView) view.findViewById(R.id.Name);
         TextView Lat = (TextView) view.findViewById(R.id.Date);
         TextView Lng = (TextView) view.findViewById(R.id.Time);
         String name = cursor.getString(cursor.getColumnIndexOrThrow("name"));
         String date = cursor.getString(cursor.getColumnIndexOrThrow("date"));
         String time = cursor.getString(cursor.getColumnIndexOrThrow("time"));
+        Name.setTypeface(type);
+        Name.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
         Name.setTextColor(Color.BLACK);
         Name.setText(name);
+        Lat.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+        Lat.setTypeface(type);
         Lat.setTextColor(Color.BLACK);
         Lat.setText(date);
+        Lng.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+        Lng.setTypeface(type);
         Lng.setTextColor(Color.BLACK);
         Lng.setText(time);
 

@@ -3,6 +3,7 @@ package com.ashwin.globalalarm;
 
 
 import android.app.DialogFragment;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -15,12 +16,13 @@ import android.view.View;
 import android.widget.ListView;
 
 import java.util.List;
+import java.util.TimeZone;
 
 
 public class MainActivity extends AppCompatActivity {
 
     static AlarmDBHelper dbHelper;
-    static String name;
+    static String name, timezone;
     static int dpYear, dpMonth, dpDay, tpHour, tpMinute;
 
     @Override
@@ -36,8 +38,10 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DialogFragment newFragment = new DatePickerFragment();
-                newFragment.show(getFragmentManager(), "datePicker");
+                //DialogFragment newFragment = new DatePickerFragment();
+                //newFragment.show(getFragmentManager(), "datePicker");
+                TimeZoneFragment tzf = new TimeZoneFragment();
+                tzf.show(getFragmentManager(), "timeZonePicker");
                 ListView alarmList = (ListView) findViewById(R.id.alarmList);
                 Cursor cursor = dbHelper.getAlarms();
                 AlarmCursorAdapter adapter = new AlarmCursorAdapter(getApplicationContext(), cursor, 0);

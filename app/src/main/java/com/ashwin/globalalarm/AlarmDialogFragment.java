@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.Calendar;
+import java.util.TimeZone;
 
 public class AlarmDialogFragment extends DialogFragment implements
         TextView.OnEditorActionListener {
@@ -36,9 +37,7 @@ public class AlarmDialogFragment extends DialogFragment implements
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.alarm_name, container);
         mEditText = (EditText) view.findViewById(R.id.txt_your_name);
-        getDialog().setTitle("Dialog Fragment Example");
-
-        // Show soft keyboard automatically
+        mEditText.getLayoutParams().width = 800;
         mEditText.requestFocus();
         mEditText.setOnEditorActionListener(this);
 
@@ -52,7 +51,7 @@ public class AlarmDialogFragment extends DialogFragment implements
             //EditNameDialogListener activity = (EditNameDialogListener) getActivity();
             //activity.onFinishEditDialog(mEditText.getText().toString());
             MainActivity.name = mEditText.getText().toString();
-            MainActivity.dbHelper.addAlarm(MainActivity.dpMonth+"/"+MainActivity.dpDay+"/"+MainActivity.dpYear+", ",MainActivity.tpHour+":"+MainActivity.tpMinute+", ",MainActivity.name);
+            MainActivity.dbHelper.addAlarm(MainActivity.timezone+" | "+MainActivity.dpMonth+"/"+MainActivity.dpDay+"/"+MainActivity.dpYear+" |",MainActivity.tpHour+":"+MainActivity.tpMinute,MainActivity.name+ " |");
             ListView alarmList = (ListView) getActivity().findViewById(R.id.alarmList);
             Cursor cursor = MainActivity.dbHelper.getAlarms();
             AlarmCursorAdapter adapter = new AlarmCursorAdapter(getActivity().getApplicationContext(), cursor, 0);
@@ -68,10 +67,15 @@ public class AlarmDialogFragment extends DialogFragment implements
             cal.set(Calendar.HOUR_OF_DAY, MainActivity.tpHour);
             cal.set(Calendar.MINUTE, MainActivity.tpMinute);
             cal.set(Calendar.SECOND, 0);
+            cal.setTimeZone(TimeZone.getTimeZone(MainActivity.timezone));
             long mills = cal.getTimeInMillis();
             alarmMgr.set(AlarmManager.RTC_WAKEUP, mills, pendingIntent);
+            //getActivity().setContentView(R.layout.activity_main);
+            //alarmMgr.cancel(pendingIntent);
             //Toast.makeText(this, "Event scheduled at " + tpHour + ":" + tpMinute + " " + dpDay + "/" + dpMonth + "/" + dpYear, Toast.LENGTH_LONG).show();
             this.dismiss();
+            startActivity(new Intent(getActivity(),MainActivity.class));
+            //getActivity().setContentView(R.layout.activity_main);
             return true;
         }
         return false;
