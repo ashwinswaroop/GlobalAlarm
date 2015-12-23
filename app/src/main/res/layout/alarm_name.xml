@@ -3,21 +3,21 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:layout_margin="10dp"
+    android:layout_margin="20dp"
     android:orientation="vertical" >
 
     <TextView
         android:id="@+id/lbl_your_name"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="Your name" />
+        android:layout_margin="20dp"
+        android:text="Alarm Label" />
 
     <EditText
         android:id="@+id/txt_your_name"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:hint="Type your name"
+        android:hint="Enter label"
         android:imeOptions="actionDone"
         android:inputType="text" />
 

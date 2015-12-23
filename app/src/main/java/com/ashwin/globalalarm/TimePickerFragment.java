@@ -23,7 +23,9 @@ public class TimePickerFragment extends DialogFragment
     }
 
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        MainActivity.time = hourOfDay + " " + minute;
+        //MainActivity.time = hourOfDay + " " + minute;
+        MainActivity.tpHour = hourOfDay;
+        MainActivity.tpMinute = minute;
         FragmentManager fm = getFragmentManager();
         AlarmDialogFragment editNameDialog = new AlarmDialogFragment();
         editNameDialog.show(fm, "fragment_edit_name");

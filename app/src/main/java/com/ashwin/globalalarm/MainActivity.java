@@ -20,7 +20,8 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     static AlarmDBHelper dbHelper;
-    static String name, date, time;
+    static String name;
+    static int dpYear, dpMonth, dpDay, tpHour, tpMinute;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
