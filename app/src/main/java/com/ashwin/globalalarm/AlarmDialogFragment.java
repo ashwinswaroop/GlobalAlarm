@@ -58,7 +58,7 @@ public class AlarmDialogFragment extends DialogFragment implements
             alarmList.setAdapter(adapter);
             adapter.changeCursor(cursor);
             Intent intent = new Intent("com.ashwin.globalalarm.myEvent");
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity().getApplicationContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity().getApplicationContext(), MainActivity.alarmCounter, intent, PendingIntent.FLAG_UPDATE_CURRENT);
             AlarmManager alarmMgr = (AlarmManager) (getActivity().getApplicationContext().getSystemService(Context.ALARM_SERVICE));
             Calendar cal = Calendar.getInstance();
             cal.set(Calendar.YEAR, MainActivity.dpYear);
@@ -69,6 +69,7 @@ public class AlarmDialogFragment extends DialogFragment implements
             cal.set(Calendar.SECOND, 0);
             cal.setTimeZone(TimeZone.getTimeZone(MainActivity.timezone));
             long mills = cal.getTimeInMillis();
+            MainActivity.alarmCounter++;
             alarmMgr.set(AlarmManager.RTC_WAKEUP, mills, pendingIntent);
             //getActivity().setContentView(R.layout.activity_main);
             //alarmMgr.cancel(pendingIntent);

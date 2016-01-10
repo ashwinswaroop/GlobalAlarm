@@ -13,6 +13,7 @@ public class AlarmDBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_NAME = "name";
     public static final String COLUMN_DATE = "date";
     public static final String COLUMN_TIME = "time";
+    public static final String COLUMN_STATUS = "status";
     public static final String COLUMN_ID = "_id";
 
     public AlarmDBHelper(Context context) {
@@ -25,7 +26,8 @@ public class AlarmDBHelper extends SQLiteOpenHelper {
                         COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
                         COLUMN_NAME + " TEXT, " +
                         COLUMN_DATE + " TEXT, " +
-                        COLUMN_TIME + " TEXT)"
+                        COLUMN_TIME + " TEXT, " +
+                        COLUMN_STATUS + " INTEGER)"
         );
     }
 
@@ -41,6 +43,7 @@ public class AlarmDBHelper extends SQLiteOpenHelper {
         rowData.put (COLUMN_DATE, Date);
         rowData.put (COLUMN_TIME, Time);
         rowData.put (COLUMN_NAME, Name);
+        rowData.put (COLUMN_STATUS, 1);
         retVal = db.insert(TABLE_NAME, null, rowData);
         return retVal;
     }
@@ -51,8 +54,31 @@ public class AlarmDBHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
-    public void clearAlarms () {
+    public void deleteAlarm (int pos) {
         SQLiteDatabase db = getWritableDatabase();
-        db.delete(TABLE_NAME, null, null);
+        //db.delete(TABLE_NAME, null, null);
+        db.execSQL("DELETE FROM "+TABLE_NAME+" WHERE "+COLUMN_ID+" in(SELECT "+COLUMN_ID+" FROM "+TABLE_NAME+" LIMIT 1 OFFSET "+pos+")");
+    }
+
+    public void disableAlarm (int pos) {
+        SQLiteDatabase db = getWritableDatabase();
+        //db.delete(TABLE_NAME, null, null);
+        db.execSQL("UPDATE "+TABLE_NAME+" SET "+COLUMN_STATUS+" =0 WHERE "+COLUMN_ID+" in(SELECT "+COLUMN_ID+" FROM "+TABLE_NAME+" LIMIT 1 OFFSET "+pos+")");
+    }
+
+    public void enableAlarm (int pos) {
+        SQLiteDatabase db = getWritableDatabase();
+        //db.delete(TABLE_NAME, null, null);
+        db.execSQL("UPDATE "+TABLE_NAME+" SET "+COLUMN_STATUS+" =1 WHERE "+COLUMN_ID+" in(SELECT "+COLUMN_ID+" FROM "+TABLE_NAME+" LIMIT 1 OFFSET "+pos+")");
+    }
+
+    public int getStatus (int pos) {
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor;
+        //db.delete(TABLE_NAME, null, null);
+        cursor = db.rawQuery("SELECT "+COLUMN_STATUS+" FROM "+TABLE_NAME+" WHERE "+COLUMN_ID+" in(SELECT "+COLUMN_ID+" FROM "+TABLE_NAME+" LIMIT 1 OFFSET "+(pos)+")", null);
+        cursor.moveToFirst();
+        int aaa= cursor.getInt(cursor.getColumnIndexOrThrow("status"));
+        return aaa;
     }
 }
